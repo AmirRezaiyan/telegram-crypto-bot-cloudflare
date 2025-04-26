@@ -11,7 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Robot token
-token = '7622280846:AAE0WaD1BD2zdt3lvmousi2Vm4eIGpaEl9M'
+token = 'Your_Robot_Token'
 
 # Prototyping of CoinGeckoAPI
 cg = CoinGeckoAPI()
