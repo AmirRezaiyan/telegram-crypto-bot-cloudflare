@@ -35,16 +35,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 # Function to hadle button clicks
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
-    await query.answer()
-    
-    data = query.data
-    crypto_map = {
-        "bitcoin": "بیت‌کوین",
-        "ethereum": "اتریوم",
-        "the-open-network": "تون‌کوین"
-    }
-
     try:
+        await query.answer(text="در حال دریافت اطلاعات...")  
+
+        data = query.data
+        crypto_map = {
+            "bitcoin": "بیت‌کوین",
+            "ethereum": "اتریوم",
+            "the-open-network": "تون‌کوین"
+        }
         if data == "all":
             prices = []
             for coin_id, name in crypto_map.items():
@@ -57,9 +56,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             coin_data = cg.get_price(ids=data, vs_currencies='usd')
             price = coin_data[data]['usd']
             await context.bot.send_message(chat_id=query.message.chat_id, text=f"💲 قیمت {name}: ${price:.2f}")
+    
     except Exception as e:
         logger.error(f"خطا در دریافت قیمت: {e}")
         await context.bot.send_message(chat_id=query.message.chat_id, text="متاسفم! مشکلی پیش آمده است.")
+
 
 # Function to get single crypto price
 async def get_crypto_price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
